@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<select name="GetUserById">
+    SELECT * FROM user WHERE id = :id
+    <param name="id" type="int"/>
+</select>
+
+<select name="GetUserByNameAndAge">
+    SELECT * FROM user WHERE name = :name AND age = :age
+    <param name="name" type="string"/>
+    <param name="age" type="int"/>
+</select>
+
+<select name="GetUserByIfNameAndAge">
+    SELECT * FROM user WHERE enabled = 1
+    <where>
+        <if test="name != \"\"">name = :name</if>
+        <if test="age != 0">age = :age</if>
+    </where>
+    <param name="name" type="string"/>
+    <param name="age" type="int"/>
+</select>
+
+func GetUserByIfNameAndAge(name string, age int) string {
+    sql := SELECT * FROM user WHERE enabled = 1
+    if name != "" {
+        sql = sql + "AND name = :name"
+    }
+    if age != 0 {
+        sql = sql + "AND age = :age"
+    }
+    return sql
+}
+
+<select name="GetUserByNameOrAge" resultMap="">
+    SELECT * FROM user
+    <where>
+        <when test="name != ''">name = :name</when>
+        <when test="age != 0">
+            <if test="age > 20">age = :age</if>
+            <if test="age > 20">age = :age</if>
+        </when>
+    </where>
+    <param name="name" type="string"/>
+    <param name="age" type="int"/>
+</select>
+
+func GetUserByNameOrAge(name string, age int) string {
+    sql := SELECT * FROM user
+    if name != "" {
+        sql = sql + AND name = :name
+    }
+    if age != 0 {
+        sql = sql + AND age = :age
+    }
+    return sql
+}

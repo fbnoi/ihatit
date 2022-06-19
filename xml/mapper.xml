@@ -1,0 +1,29 @@
+<mapper>
+    <model name="User">
+        <key name="Id" generator="gen" type="int"/>
+        <field name="Name" type="string"/>
+        <field name="Email" type="string"/>
+        <field name="Age" type="string"/>
+        <field name="CreatedAt" type="datetime"/>
+        <field name="UpdatedAt" type="datetime"/>
+        <field name="Posts" type="model" mapped="Post" relation="oneToMany"/>
+    </model>
+    <!-- type User struct {
+        Id          int
+        Name        string
+        Email       string
+        Age         int
+        CreatedAt   time.Time
+        UpdatedAt   time.Time
+        Posts       []Post
+    } -->
+
+    <model name="Post">
+        <key name="Id" generator="gen" type="int"/>
+        <field name="Title" type="string"/>
+        <field name="Content" type="string"/>
+        <field name="Tag" type="string"/>
+        <field name="Author" type="model" inverted="User" relation="manyToOne"/>
+    </model>
+
+</mapper>
