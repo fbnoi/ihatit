@@ -1,14 +1,12 @@
 <mapping>
-    <select name="GetUserByNameAndAge" resultMapper="User">
+    <select name="GetUserByNameAndAge" resultMapper="[]User">
         SELECT * FROM user WHERE name = #{name} AND age = #{age}
-        <param name="name" type="string"/>
-        <param name="age" type="int"/>
     </select>
     <insert name="AddUser" parameterType="User">
         INSERT INTO user (id, name, gender, email) 
         VALUES (#{id}, #{name}, #{gender}, #{email})
     </insert>
-    <insert name="AddUsers" parameterType="User">
+    <insert name="AddUsers" parameterType="[]User">
         INSERT INTO user (id, name, gender, email) 
         VALUES 
         <batch collection="list">
